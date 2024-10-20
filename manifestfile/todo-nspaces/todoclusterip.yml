@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: todo
+  namespace: todoapp
+  labels:
+    app: todo
+
+spec:
+  containers:
+  - name: todo
+    image: ratnadeepsali/todo:latest
+    resources: 
+        requests:
+            cpu: "50m"
+            memory: "90Mi" 
+    ports:
+      - name: http
+        containerPort: 80
+        protocol: TCP
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: todoip
+  namespace: todoapp
+
+spec:
+  type: ClusterIP
+  selector:
+    app: todo
+  ports:
+  - port: 80
+    # targetPort: 80
+    name: todoip
+    protocol: TCP
